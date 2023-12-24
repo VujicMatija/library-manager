@@ -5,7 +5,7 @@ const Book = require('../models/bookModel');
 // @access  Public
 const getBooks = async (req, res) => {
   try {
-    const books = await Book.find({});
+    const books = await Book.find({}).populate('rentedTo');
 
     res.json(books);
   } catch (error) {
@@ -21,9 +21,9 @@ const getBooks = async (req, res) => {
 // @access  Public
 const createBook = async (req, res) => {
   try {
-    const { title, genre, authors, isbn, yearOfRelease } = req.body;
+    const { title, genre, authors, isbn, yearOfRelease, rentedTo } = req.body;
 
-    const book = new Book({ title, genre, authors, isbn, yearOfRelease });
+    const book = new Book({ title, genre, authors, isbn, yearOfRelease, rentedTo });
     await book.save();
 
     res.status(201);
