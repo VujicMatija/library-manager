@@ -12,7 +12,7 @@ const authorSchema = mongoose.Schema({
     min: 18,
     max: 100,
   },
-})
+});
 
 const bookSchema = mongoose.Schema({
   title: String,
@@ -26,12 +26,12 @@ const bookSchema = mongoose.Schema({
   genre: {
     type: [String],
     enum: [Genre.Thriller, Genre.SciFi, Genre.Fiction, Genre.Undefined],
-    default: Genre.Undefined
+    default: Genre.Undefined,
   },
   rentedTo: {
     type: [mongoose.Types.ObjectId],
-    ref: 'User'
-  }
+    ref: 'User',
+  },
 });
 
 const Book = mongoose.model('Book', bookSchema);

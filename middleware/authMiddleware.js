@@ -4,31 +4,34 @@ const User = require('../models/userModel');
 // Bearer asdmxb,czxnmbc1243
 
 const protect = async (req, res, next) => {
-    let token;
-            // null undefined '' -> false
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        try {
-            token = req.headers.authorization.split(' ')[1];
+  let token;
+  // null undefined '' -> false
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
 
-            const decoded = jwt.decode(token, process.env.JWT_SECRET);
+      const decoded = jwt.decode(token, process.env.JWT_SECRET);
 
-            req.user = await User.findById(decoded.id).select('-password');
+      req.user = await User.findById(decoded.id).select('-password');
 
-            next();
-        } catch (error) {
-            res.status(401);
-            res.json({
-                message: 'Not authorized, token failed'
-            })
-        }
+      next();
+    } catch (error) {
+      res.status(401);
+      res.json({
+        message: 'Not authorized, token failed',
+      });
     }
+  }
 
-    if (!token) {
-        res.status(401);
-            res.json({
-                message: 'Not authorized, no token'
-            })
-    }
-}
+  if (!token) {
+    res.status(401);
+    res.json({
+      message: 'Not authorized, no token',
+    });
+  }
+};
 
 module.exports = { protect };
