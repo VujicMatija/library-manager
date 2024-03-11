@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 // Routes
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
+const editionRoutes = require('./routes/editionRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.get('/', (_, res) => {
 // /books  /api/v1/books
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/editions', editionRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

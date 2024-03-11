@@ -6,7 +6,7 @@ const Book = require('../models/bookModel');
 // @route   GET /books
 // @access  Public
 const getBooks = asyncHandler(async (req, res) => {
-  const books = await Book.find({}).populate('rentedTo');
+  const books = await Book.find({}).populate('editions');
   res.json(books);
 });
 
@@ -14,15 +14,14 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route   POST /books
 // @access  Public
 const createBook = asyncHandler(async (req, res) => {
-  const { title, genre, authors, isbn, yearOfRelease, rentedTo } = req.body;
+  const { title, genre, authors, yearOfRelease, description } = req.body;
 
   const book = new Book({
     title,
     genre,
     authors,
-    isbn,
     yearOfRelease,
-    rentedTo,
+    description,
   });
   const newBook = await book.save();
 

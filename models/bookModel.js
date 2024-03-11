@@ -17,20 +17,23 @@ const authorSchema = mongoose.Schema({
 const bookSchema = mongoose.Schema({
   title: String,
   authors: [authorSchema],
-  yearOfRelease: Number,
+  yearOfRelease: {
+    type: Number,
+    required: true,
+  },
   ratings: [Number],
-  inStock: Number,
-  isbn: String,
-  numberOfPages: Number,
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
   genre: {
     type: [String],
     enum: [Genre.Thriller, Genre.SciFi, Genre.Fiction, Genre.Undefined],
     default: Genre.Undefined,
   },
-  rentedTo: {
+  editions: {
     type: [mongoose.Types.ObjectId],
-    ref: 'User',
+    ref: 'Edition',
   },
 });
 
